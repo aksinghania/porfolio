@@ -20,6 +20,7 @@ import {
   // generateWidthStyles,
 } from "./helper";
 import blog, { sortBlogPostsByDate } from "./blog";
+import { useRef } from "react";
 // import { round } from "mathjs";
 const imageFileTypes = ["jpg", "jpeg", "png", "gif"];
 
@@ -54,7 +55,7 @@ const AboutMe = () => {
 };
 const ContactMe = () => {
   return (
-    <div className="contact-container">
+    <div className="contact-container" id="contact">
       <span className="contact-title highlight">
         I can be reached through <RightwardArrow />
       </span>
@@ -86,26 +87,55 @@ const ContactMe = () => {
     </div>
   );
 };
-const Navbar = () => {
+const Navbar = ({ visibleDivsIds = [] }) => {
+  const items = [
+    {
+      display: "ABOUT",
+      href: "#about",
+    },
+    {
+      display: "PROJECTS",
+      href: "#projects",
+    },
+    {
+      display: "BLOG",
+      href: "#blog",
+    },
+    {
+      display: "WESENSE",
+      href: "",
+    },
+    {
+      display: "SKILLSTRAINER",
+      href: "",
+    },
+    {
+      display: "ACADEMICS",
+      href: "",
+    },
+    {
+      display: "HONOURS",
+      href: "",
+    },
+  ];
   return (
     <div class="slider -fast">
       <div className="slider-primary">
-        <a href="#about">ABOUT</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="#blog">BLOG</a>
-        <a>WESENSE</a>
-        <a>SKILLSTRAINER</a>
-        <a>ACADEMICS</a>
-        <a>HONOURS</a>
+        {items.map((val) => (
+          <a
+            href={val.href}
+            className={`${
+              visibleDivsIds.includes(val.href.substring(1)) && "underline"
+            }`}
+          >
+            {val.display}
+          </a>
+        ))}
       </div>
       <div className="slider-secondary ">
-        <a href="#about">ABOUT</a>
-        <a href="#projects">PROJECTS</a>
-        <a href="#blog">BLOG</a>
-        <a>WESENSE</a>
-        <a>SKILLSTRAINER</a>
-        <a>ACADEMICS</a>
-        <a>HONOURS</a>
+        {items.map((val) => (
+          <a href={val.href}>{val.display}</a>
+        ))}
       </div>
     </div>
   );
@@ -135,9 +165,49 @@ const App = () => {
     setUserData(sortBlogPostsByDate(blog.posts));
   }, [blog]);
 
+  const divRef = useRef(null);
+  const [divIdsVisible, setDivIdsVisible] = useState(["about"]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (divRef.current) {
+        const visibleDivIDs = [];
+
+        const checkVisibility = (element) => {
+          const children = element.children;
+          for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            const rect = child.getBoundingClientRect();
+
+            if (
+              rect.top <= window.innerHeight &&
+              rect.bottom >= 0 &&
+              child.id != ""
+            ) {
+              visibleDivIDs.push(child.id);
+            }
+
+            if (child.children.length > 0) {
+              checkVisibility(child);
+            }
+          }
+        };
+
+        checkVisibility(divRef.current);
+        // console.log("Visible Div IDs:", visibleDivIDs);
+        setDivIdsVisible(visibleDivIDs);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div onMouseMove={handleMouseMove} className="index">
-      <Navbar />
+    <div onMouseMove={handleMouseMove} className="index" ref={divRef}>
+      <Navbar visibleDivsIds={divIdsVisible} />
       <div className="app">
         <div className="column-container first-column">
           <AboutMe />
@@ -198,7 +268,7 @@ const RecentBlogSection = ({ items, amount, handleClick }) => {
             {item?.attachments
               .filter((a) => endsWithAny(imageFileTypes, a))
               .map((attachment) => {
-                console.log(attachment);
+                // console.log(attachment);
                 return (
                   <img
                     key={attachment}
@@ -261,29 +331,30 @@ const Video = ({ mux }) => {
 };
 const SupportedBy = ({}) => {
   const imageLinks = [
-    "https://www.globalsocialleaders.com/wp-content/uploads/2022/07/GSL_Logo-RGB_HR-Colour-300x174.png",
+    "https://www.future-foundations.co.uk/wp-content/uploads/2015/10/FF-Logo-Trans-BG-250x250.png",
     "https://tyeglobal.org/wp-content/uploads/2021/03/TYE-LOGO.png",
     "https://upload.wikimedia.org/wikipedia/commons/b/bd/Ministry_of_Education_India.svg",
-    "https://upload.wikimedia.org/wikipedia/en/e/eb/All_India_Council_for_Technical_Education_logo.png",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
+    "https://diamondchallenge.org/wp-content/uploads/2023/11/DC-logo_003C71V-1.png",
+    "https://upload.wikimedia.org/wikipedia/commons/e/e4/Adani_2012_logo.png",
   ];
 
   return (
-    <div className="mt-16" id="projects">
+    <div className="mt-16" id="supported">
       <span className="projects-heading">
-        <span className="highlight">[supported by]</span> organisations who
-        support me
+        <span className="highlight">[organizations]</span> supported by
       </span>
 
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {imageLinks.map((link, index) => (
-            <div key={index} className="max-w-full">
+            <div
+              key={index}
+              className="max-w-full flex items-center justify-center"
+            >
               <img
                 src={link}
                 alt={`Image ${index + 1}`}
-                className="w-full h-auto object-cover"
+                className="max-h-28 object-contain"
               />
             </div>
           ))}
