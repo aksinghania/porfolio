@@ -169,48 +169,48 @@ const App = () => {
     setUserData(sortBlogPostsByDate(blog.posts));
   }, [blog]);
 
-  const divRef = useRef(null);
-  const [divIdsVisible, setDivIdsVisible] = useState(["about"]);
+  // const divRef = useRef(null);
+  // const [divIdsVisible, setDivIdsVisible] = useState(["about"]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (divRef.current) {
-        const visibleDivIDs = [];
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (divRef.current) {
+  //       const visibleDivIDs = [];
 
-        const checkVisibility = (element) => {
-          const children = element.children;
-          for (let i = 0; i < children.length; i++) {
-            const child = children[i];
-            const rect = child.getBoundingClientRect();
+  //       const checkVisibility = (element) => {
+  //         const children = element.children;
+  //         for (let i = 0; i < children.length; i++) {
+  //           const child = children[i];
+  //           const rect = child.getBoundingClientRect();
 
-            if (
-              rect.top <= window.innerHeight &&
-              rect.bottom >= 0 &&
-              child.id != ""
-            ) {
-              visibleDivIDs.push(child.id);
-            }
+  //           if (
+  //             rect.top <= window.innerHeight &&
+  //             rect.bottom >= 0 &&
+  //             child.id != ""
+  //           ) {
+  //             visibleDivIDs.push(child.id);
+  //           }
 
-            if (child.children.length > 0) {
-              checkVisibility(child);
-            }
-          }
-        };
+  //           if (child.children.length > 0) {
+  //             checkVisibility(child);
+  //           }
+  //         }
+  //       };
 
-        checkVisibility(divRef.current);
-        // console.log("Visible Div IDs:", visibleDivIDs);
-        setDivIdsVisible(visibleDivIDs);
-      }
-    };
+  //       checkVisibility(divRef.current);
+  //       // console.log("Visible Div IDs:", visibleDivIDs);
+  //       setDivIdsVisible(visibleDivIDs);
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   return (
-    <div onMouseMove={handleMouseMove} className="index" ref={divRef}>
+    <div onMouseMove={handleMouseMove} className="index">
       <Navbar visibleDivsIds={divIdsVisible} />
       <div className="app">
         <div className="column-container first-column">
