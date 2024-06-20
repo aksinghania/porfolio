@@ -87,7 +87,7 @@ const ContactMe = () => {
     </div>
   );
 };
-const Navbar = ({ visibleDivsIds = [] }) => {
+const Navbar = ({}) => {
   const items = [
     {
       display: "ABOUT",
@@ -126,14 +126,7 @@ const Navbar = ({ visibleDivsIds = [] }) => {
     <div class="slider -fast">
       <div className="slider-primary">
         {items.map((val) => (
-          <a
-            href={val.href}
-            className={`${
-              visibleDivsIds.includes(val.href.substring(1)) && "underline"
-            }`}
-          >
-            {val.display}
-          </a>
+          <a href={val.href}>{val.display}</a>
         ))}
       </div>
       <div className="slider-secondary">
@@ -211,7 +204,7 @@ const App = () => {
 
   return (
     <div onMouseMove={handleMouseMove} className="index">
-      <Navbar visibleDivsIds={divIdsVisible} />
+      <Navbar />
       <div className="app">
         <div className="column-container first-column">
           <AboutMe />
