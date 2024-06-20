@@ -30,7 +30,7 @@ const AboutMe = () => {
     <div className="about-container" id="about">
       <span className="title-name">
         <span className="highlight">[about]</span>
-        <span className="title-name-name">AKSHAT SINGHANIA</span>
+        <span className="title-name-name"> AKSHAT SINGHANIA</span>
       </span>
 
       <span className="highlight aboutme">
@@ -145,6 +145,7 @@ const App = () => {
         </div>
         <div>
           <Projects cursorPosition={cursorPosition} />
+          <SupportedBy />
           <RecentBlogSection items={userData} amount={1000} />
         </div>
       </div>
@@ -184,7 +185,8 @@ const RecentBlogSection = ({ items, amount, handleClick }) => {
   return (
     <div className="blog" id="blog">
       <span className="projects-heading">
-        Here's what I've been up to recently
+        <span className="highlight">[blog]</span> Here's what I've been up to
+        recently
       </span>
       {items.slice(0, amount).map((item) => (
         <div className="blog-content" key={item?.id}>
@@ -257,6 +259,41 @@ const Video = ({ mux }) => {
     </video>
   );
 };
+const SupportedBy = ({}) => {
+  const imageLinks = [
+    "https://www.globalsocialleaders.com/wp-content/uploads/2022/07/GSL_Logo-RGB_HR-Colour-300x174.png",
+    "https://tyeglobal.org/wp-content/uploads/2021/03/TYE-LOGO.png",
+    "https://upload.wikimedia.org/wikipedia/commons/b/bd/Ministry_of_Education_India.svg",
+    "https://upload.wikimedia.org/wikipedia/en/e/eb/All_India_Council_for_Technical_Education_logo.png",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    // Add more image links as needed
+  ];
+
+  return (
+    <div className="mt-16" id="projects">
+      <span className="projects-heading">
+        <span className="highlight">[supported by]</span> organisations who
+        support me
+      </span>
+
+      <div className="container mx-auto p-4">
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {imageLinks.map((link, index) => (
+            <div key={index} className="max-w-full">
+              <img
+                src={link}
+                alt={`Image ${index + 1}`}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Projects = ({ cursorPosition }) => {
   const [projects, setProjects] = useState([
     {
@@ -333,7 +370,9 @@ const Projects = ({ cursorPosition }) => {
 
   return (
     <div className="projects-container" id="projects">
-      <span className="projects-heading"> cool stuff i do</span>
+      <span className="projects-heading">
+        <span className="highlight">[work]</span> cool stuff i do
+      </span>
 
       <div className="media-row">
         {projects.map((project, index) => (
