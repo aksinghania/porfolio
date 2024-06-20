@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 // import { SlideDown } from "react-slidedown";
-import "react-slidedown/lib/slidedown.css";
 import {
   Gameoflife,
   Skillstrainer,
@@ -12,7 +11,8 @@ import {
 // import { RiArrowDropDownLine } from "react-icons/ri";
 // import { RiArrowDropUpLine } from "react-icons/ri";
 // import { analytics } from "./firebase";
-
+import "./App.css";
+import "./index.css";
 import {
   convertTimestampToDate,
   endsWithAny,
