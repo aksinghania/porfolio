@@ -102,20 +102,24 @@ const Navbar = ({ visibleDivsIds = [] }) => {
       href: "#blog",
     },
     {
+      display: "ORGS",
+      href: "#supported",
+    },
+    {
       display: "WESENSE",
-      href: "",
+      href: "#blog",
     },
     {
       display: "SKILLSTRAINER",
-      href: "",
+      href: "#blog",
     },
     {
       display: "ACADEMICS",
-      href: "",
+      href: "#blog",
     },
     {
       display: "HONOURS",
-      href: "",
+      href: "#blog",
     },
   ];
   return (
@@ -132,7 +136,7 @@ const Navbar = ({ visibleDivsIds = [] }) => {
           </a>
         ))}
       </div>
-      <div className="slider-secondary ">
+      <div className="slider-secondary">
         {items.map((val) => (
           <a href={val.href}>{val.display}</a>
         ))}
