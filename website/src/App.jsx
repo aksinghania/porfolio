@@ -267,7 +267,6 @@ const SupportedBy = ({}) => {
     "https://upload.wikimedia.org/wikipedia/en/e/eb/All_India_Council_for_Technical_Education_logo.png",
     "https://via.placeholder.com/150",
     "https://via.placeholder.com/150",
-    // Add more image links as needed
   ];
 
   return (
