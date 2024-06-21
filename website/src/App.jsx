@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 // import { SlideDown } from "react-slidedown";
 import {
   Gameoflife,
@@ -11,6 +11,7 @@ import {
 // import { RiArrowDropDownLine } from "react-icons/ri";
 // import { RiArrowDropUpLine } from "react-icons/ri";
 // import { analytics } from "./firebase";
+import useBackground from "./hooks/useBackground";
 import "./App.css";
 import "./index.css";
 import {
@@ -202,12 +203,51 @@ const App = () => {
   //   };
   // }, []);
 
+  function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  }
+
+  function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(
+      getWindowDimensions()
+    );
+
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return windowDimensions;
+  }
+
+  const { width, height } = useWindowDimensions();
+  const { regenerate, svg, backgrounds } = useBackground({
+    width,
+    height,
+    ratio: 0.4,
+    customPalette: ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff"],
+  });
+  const style = useMemo(() => {
+    return {
+      background: [`url("${svg}")`, ...backgrounds].join(", "),
+    };
+  }, [svg, backgrounds]);
+
   return (
-    <div onMouseMove={handleMouseMove} className="index">
+    <div style={style} onMouseMove={handleMouseMove} className="index">
       <Navbar />
       <div className="app">
         <div className="column-container first-column">
           <AboutMe />
+
           <ContactMe />
         </div>
         <div>

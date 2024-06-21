@@ -187,7 +187,7 @@
 
 /**/
 .slider {
-  margin-top: 2%;
+  /* margin-top: 2%; */
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -214,6 +214,7 @@
   padding-right: 30px;
 }
 .slider-secondary {
+  margin-top: 2%;
   margin-left: 0;
 }
 @keyframes slide-linear {
